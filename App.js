@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import Slider from '@react-native-community/slider';
+import Clipboard from 'expo-clipboard';
 
 let charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
@@ -16,13 +17,18 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [size, setSize] = useState(10);
 
-  function generatePass(){
+  function generatePass() {
     let pass = '';
-    for(let i=0, n = charset.length; i < size; i++) {
+    for (let i = 0, n = charset.length; i < size; i++) {
       pass += charset.charAt(Math.floor(Math.random() * n)) // a cada loop pega um valor aleatorio do charset. Floor() garante um valor inteiro e random() faz com que o valor seja randomico
     }
 
     setPassword(pass);
+  }
+
+  function copyPass() {
+    Clipboard.setString(password)
+    alert('Senha copiada com sucesso');
   }
 
   return (
@@ -36,25 +42,25 @@ export default function App() {
 
       <View style={styles.area}>
         <Slider
-          style={{ height:50 }}
+          style={{ height: 50 }}
           minimumValue={5}
           maximumValue={15}
           minimumTrackTintColor="#FF7538"
           maximumTrackTintColor="#000"
           value={size}
-          onValueChange={ (valor) => setSize(valor.toFixed(0)) }
+          onValueChange={(valor) => setSize(valor.toFixed(0))}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={generatePass}>
         <Text style={styles.buttonText}>Gerar senha</Text>
       </TouchableOpacity>
 
-
       {password !== '' && (
 
         <View style={styles.area}>
-          <Text style={styles.password}> {password}</Text>
+          <Text style={styles.password} onLongPress={copyPass}> {password}</Text>
         </View>
+
       )}
 
     </View>
@@ -82,23 +88,23 @@ const styles = StyleSheet.create({
     width: '85%',
     borderRadius: 7
   },
-  button:{
-    backgroundColor:'#FFA200',
-    width:'85%',
+  button: {
+    backgroundColor: '#FFA200',
+    width: '85%',
     height: 50,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 7,
-    marginBottom:25
+    marginBottom: 25
   },
-  buttonText:{
-    fontSize:20,
+  buttonText: {
+    fontSize: 20,
     color: '#fff',
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
-  password:{
-    fontSize:20,
-    padding:10,
-    textAlign:'center'
+  password: {
+    fontSize: 20,
+    padding: 10,
+    textAlign: 'center'
   }
 })
