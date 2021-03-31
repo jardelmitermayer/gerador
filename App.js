@@ -9,13 +9,20 @@ import {
 
 import Slider from '@react-native-community/slider';
 
+let charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
 export default function App() {
 
   const [password, setPassword] = useState('1234568');
   const [size, setSize] = useState(10);
 
   function generatePass(){
-    alert(size)
+    let pass = '';
+    for(let i=0, n = charset.length; i < size; i++) {
+      pass += charset.charAt(Math.floor(Math.random() * n)) // a cada loop pega um valor aleatorio do charset. Floor() garante um valor inteiro e random() faz com que o valor seja randomico
+    }
+
+    setPassword(pass);
   }
 
   return (
