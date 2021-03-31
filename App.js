@@ -13,7 +13,7 @@ let charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 export default function App() {
 
-  const [password, setPassword] = useState('1234568');
+  const [password, setPassword] = useState('');
   const [size, setSize] = useState(10);
 
   function generatePass(){
@@ -49,9 +49,13 @@ export default function App() {
         <Text style={styles.buttonText}>Gerar senha</Text>
       </TouchableOpacity>
 
-      <View style={styles.area}>
-        <Text style={styles.password}> { password }</Text>
-      </View>
+
+      {password !== '' && (
+
+        <View style={styles.area}>
+          <Text style={styles.password}> {password}</Text>
+        </View>
+      )}
 
     </View>
   )
