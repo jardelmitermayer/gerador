@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,14 @@ import {
 import Slider from '@react-native-community/slider';
 
 export default function App() {
+
+  const [password, setPassword] = useState('1234568');
+  const [size, setSize] = useState(10);
+
+  function generatePass(){
+    alert(size)
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -17,7 +25,7 @@ export default function App() {
         style={styles.logo}
       />
 
-      <Text style={styles.characters}>12 Caracteres</Text>
+      <Text style={styles.characters}> {size} Caracteres</Text>
 
       <View style={styles.area}>
         <Slider
@@ -26,14 +34,16 @@ export default function App() {
           maximumValue={15}
           minimumTrackTintColor="#FF7538"
           maximumTrackTintColor="#000"
+          value={size}
+          onValueChange={ (valor) => setSize(valor.toFixed(0)) }
         />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={generatePass}>
         <Text style={styles.buttonText}>Gerar senha</Text>
       </TouchableOpacity>
 
       <View style={styles.area}>
-        <Text style={styles.password}>123123</Text>
+        <Text style={styles.password}> { password }</Text>
       </View>
 
     </View>
